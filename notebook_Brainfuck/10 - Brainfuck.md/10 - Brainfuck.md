@@ -26,7 +26,7 @@
 ![](vx_images/5795105889566.png)
 
 
-# Wordpress is running an older version of wp-support-plus-responsive-ticket-system and there is an exploit on exploit-db. See [05 - Enumeration.md](05%20-%20Enumeration.md) for the wpscan output
+# Wordpress is running an older version of wp-support-plus-responsive-ticket-system and there is an exploit on exploit-db. See [05 - Enumeration.md](../05%20-%20Enumeration.md/05%20-%20Enumeration.md) for the wpscan output
 
 ![](vx_images/4423908546209.png)
 
