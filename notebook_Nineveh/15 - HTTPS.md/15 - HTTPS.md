@@ -81,6 +81,13 @@ Remember LFI requires the word **Notes**?
 
 Single quotes didn't work for me
 
+# File Inclusion for RCE
+![](vx_images/4973270230666.png)
+We can see the file name. Let's include it now.
+
+```bash
+http://nineveh.htb/department/manage.php?notes=/var/tmp/ninevehNotes.php
+```
 
 # Initial Shell Access
 ![](vx_images/155396688352.png)
