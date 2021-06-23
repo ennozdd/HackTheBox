@@ -101,7 +101,7 @@ Address + 28 + 4 because we want to return to the stack
 | ----------- | ------------- |
 | buffer      | 0xffffd610    |
 | ret address | 0xffffd610+28 |
-| shellcode   |               |
+| shellcode   |      0xffffd610+32         |
 
 
 ![](vx_images/5376231168893.png)
