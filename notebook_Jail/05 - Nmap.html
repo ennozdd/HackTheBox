@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="generator" content="VNote">
+
+    <title>05 - Nmap - VNote</title>
+
+    <style type="text/css">
+    div.code-toolbar > div.toolbar {
+    display: none;
+}
+
+    </style>
+
+    <style type="text/css">
+    *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .col-md-3 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-md-9 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 75%;
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-xl-2 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 16.666667%;
+        flex: 0 0 16.666667%;
+        max-width: 16.666667%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-xl-10 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 83.333333%;
+        flex: 0 0 83.333333%;
+        max-width: 83.333333%;
+    }
+}
+
+@media (min-width: 768px) {
+    .pt-md-3, .py-md-3 {
+        padding-top: 1rem!important;
+    }
+}
+
+@media (min-width: 768px) {
+    .pb-md-3, .py-md-3 {
+        padding-bottom: 1rem!important;
+    }
+}
+
+@media (min-width: 768px) {
+    .pl-md-5, .px-md-5 {
+        padding-left: 3rem!important;
+    }
+}
+
+.d-none {
+    display: none!important;
+}
+
+@media (min-width: 1200px) {
+    .d-xl-block {
+        display: block!important;
+    }
+}
+
+@media (min-width: 768px) {
+    .d-md-block {
+        display: block!important;
+    }
+}
+
+.bd-content {
+    -webkit-box-ordinal-group: 1;
+    -ms-flex-order: 0;
+    order: 0;
+}
+
+.bd-toc {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    height: calc(100vh - 10rem);
+    overflow-y: auto;
+}
+
+.bd-toc {
+    -webkit-box-ordinal-group: 2;
+    -ms-flex-order: 1;
+    order: 1;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    font-size: .875rem;
+}
+
+.section-nav {
+    padding-left: 0;
+}
+
+.section-nav ul {
+    font-size: .875rem;
+    list-style-type: none;
+}
+
+.section-nav li {
+    font-size: .875rem;
+}
+
+.section-nav a {
+    color: inherit !important;
+    white-space: nowrap;
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+@media (min-width: 1200px) {
+    .flex-xl-nowrap {
+        flex-wrap: nowrap !important;
+    }
+}
+
+#floating-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: #00897B;
+    position: fixed;
+    top: .5rem;
+    right: .5rem;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px #666;
+}
+
+#floating-button .more {
+    color: #F5F5F5;
+    position: absolute;
+    top: 0;
+    display: block;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    line-height: 2.5rem;
+    font-size: 2rem;
+    font-family: 'monospace';
+    font-weight: 300;
+}
+
+.hide-none {
+    display: none !important;
+}
+
+.col-expand {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    padding-right: 3rem !important;
+}
+
+.outline-bold {
+    font-weight: bolder !important;
+}
+
+@media print {
+    #floating-button {
+        display: none !important;
+    }
+}
+
+
+    #vx-content.vx-section-number, #vx-content.vx-section-number-2 h1, #vx-content.vx-section-number-3 h1, #vx-content.vx-section-number-3 h2 { counter-reset: section1 0 section2 0 section3 0 section4 0 section5 0 section6 0; }
+#vx-content.vx-section-number-1 h1, #vx-content.vx-section-number-2 h2, #vx-content.vx-section-number-3 h3 { counter-reset: section2 0 section3 0 section4 0 seciton5 0 section6 0; }
+#vx-content.vx-section-number-1 h2, #vx-content.vx-section-number-2 h3, #vx-content.vx-section-number-3 h4 { counter-reset: section3 0 section4 0 section5 0 section6 0; }
+#vx-content.vx-section-number-1 h3, #vx-content.vx-section-number-2 h4, #vx-content.vx-section-number-3 h5 { counter-reset: section4 0 section5 0 section6 0; }
+#vx-content.vx-section-number-1 h4, #vx-content.vx-section-number-2 h5 { counter-reset: section5 0 section6 0; }
+#vx-content.vx-section-number-1 h5 { counter-reset: section6 0; }
+#vx-content.vx-section-number-1 h1::before, #vx-content.vx-section-number-2 h2::before, #vx-content.vx-section-number-3 h3::before { counter-increment: section1 1; content: counter(section1) ". "; }
+#vx-content.vx-section-number-1 h2::before, #vx-content.vx-section-number-2 h3::before, #vx-content.vx-section-number-3 h4::before { counter-increment: section2 1; content: counter(section1) "." counter(section2) ". "; }
+#vx-content.vx-section-number-1 h3::before, #vx-content.vx-section-number-2 h4::before, #vx-content.vx-section-number-3 h5::before { counter-increment: section3 1; content: counter(section1) "." counter(section2) "." counter(section3) ". "; }
+#vx-content.vx-section-number-1 h4::before, #vx-content.vx-section-number-2 h5::before, #vx-content.vx-section-number-3 h6::before { counter-increment: section4 1; content: counter(section1) "." counter(section2) "." counter(section3) "." counter(section4) ". "; }
+#vx-content.vx-section-number-1 h5::before, #vx-content.vx-section-number-2 h6::before { counter-increment: section5 1; content: counter(section1) "." counter(section2) "." counter(section3) "." counter(section4) "." counter(section5) ". "; }
+#vx-content.vx-section-number-1 h6::before { counter-increment: section6 1; content: counter(section1) "." counter(section2) "." counter(section3) "." counter(section4) "." counter(section5) "." counter(section6) ". "; }
+#vx-content.vx-constrain-image-width img, #vx-content.vx-constrain-image-width div.vx-plantuml-graph > svg, #vx-content.vx-constrain-image-width div.vx-mermaid-graph, #vx-content.vx-constrain-image-width div.vx-flowchartjs-graph, #vx-content.vx-constrain-image-width div.vx-wavedrom-graph { max-width: 100% !important; height: auto !important; }
+.vx-table-of-contents ol { list-style: none; }
+#vx-content.vx-section-number-1 .vx-table-of-contents ol { counter-reset: toc 0; }
+#vx-content.vx-section-number-1 .vx-table-of-contents ol li { counter-increment: toc 1; }
+#vx-content.vx-section-number-1 .vx-table-of-contents ol li::before { content: counters(toc, ".") ". "; font-family: cursive; }
+#vx-content.vx-section-number-2 .vx-table-of-contents > ol > li ol { counter-reset: toc 0; }
+#vx-content.vx-section-number-2 .vx-table-of-contents > ol > li ol li { counter-increment: toc 1; }
+#vx-content.vx-section-number-2 .vx-table-of-contents > ol > li ol li::before { content: counters(toc, ".") ". "; font-family: cursive; }
+#vx-content.vx-section-number-3 .vx-table-of-contents > ol > li > ol > li ol { counter-reset: toc 0; }
+#vx-content.vx-section-number-3 .vx-table-of-contents > ol > li > ol > li ol li { counter-increment: toc 1; }
+#vx-content.vx-section-number-3 .vx-table-of-contents > ol > li > ol > li ol li::before { content: counters(toc, ".") ". "; font-family: cursive; }
+.vx-header-anchor { visibility: hidden; vertical-align: middle; }
+.vx-header-anchor::after { content: attr(vx-data-anchor-icon); }
+#vx-content h1:hover .vx-header-anchor, #vx-content h2:hover .vx-header-anchor, #vx-content h3:hover .vx-header-anchor, #vx-content h4:hover .vx-header-anchor, #vx-content h5:hover .vx-header-anchor, #vx-content h6:hover .vx-header-anchor { visibility: visible; vertical-align: middle; }
+#vx-content.vx-indent-first-line p { text-indent: 2em; }
+body.vx-transparent-background { background-color: transparent !important; }
+#vx-content.vx-nonscrollable pre { white-space: pre-wrap !important; word-break: break-all !important; overflow: hidden !important; }
+#vx-content.vx-nonscrollable pre code { white-space: pre-wrap !important; word-break: break-all !important; }
+#vx-content.vx-nonscrollable code, #vx-content.vx-nonscrollable a { word-break: break-all !important; }
+body { margin: 0px auto; font-family: -apple-system, "Noto Sans", "Helvetica Neue", "Segoe UI", Helvetica, sans-serif, Tahoma, Arial, Geneva, Georgia, Palatino, "Times New Roman", 冬青黑体, "YaHei Consolas Hybrid", "Microsoft YaHei", 微软雅黑, "Microsoft YaHei UI", "WenQuanYi Micro Hei", 文泉驿雅黑, Dengxian, 等线体, STXihei, 华文细黑, "Liberation Sans", "Droid Sans", NSimSun, 新宋体, SimSun, 宋体, "Apple Color Emoji", "Segoe UI Emoji"; color: rgb(204, 209, 216); line-height: 1.5; padding: 16px; background-color: rgb(51, 56, 66); font-size: 16px; }
+h1, h2, h3, h4, h5, h6 { color: rgb(224, 108, 117); font-weight: bold; margin-top: 20px; margin-bottom: 10px; padding: 0px; }
+p { padding: 0px; margin-bottom: 16px; }
+h1 { font-size: 26px; }
+h2 { font-size: 24px; }
+h3 { font-size: 22px; }
+h4 { font-size: 20px; }
+h5 { font-size: 19px; }
+h6 { font-size: 18px; }
+a { color: rgb(97, 175, 239); margin: 0px; padding: 0px; vertical-align: baseline; text-decoration: none; word-break: break-word; }
+a:hover { text-decoration: underline; }
+a:visited { color: rgb(186, 104, 200); }
+ul, ol { padding: 0px 0px 0px 24px; }
+li { line-height: 24px; }
+li ul, li ol { margin-left: 16px; }
+p, ul, ol { font-size: 16px; line-height: 24px; }
+mark { color: rgb(0, 0, 0); background-color: rgb(196, 196, 0); }
+pre { display: block; overflow: auto hidden; tab-size: 4; }
+code { font-family: "YaHei Consolas Hybrid", Consolas, Monaco, monospace, Courier; color: rgb(152, 195, 121); word-break: break-word; }
+pre code { display: block; padding-left: 0.5em; padding-right: 0.5em; color: rgb(152, 195, 121); background-color: rgb(45, 50, 59); line-height: 1.5; font-family: "YaHei Consolas Hybrid", Consolas, Monaco, monospace, Courier; white-space: pre; tab-size: 4; }
+aside { display: block; float: right; width: 390px; }
+blockquote { color: rgb(171, 178, 191); border-left: 0.5em solid rgb(171, 178, 191); padding: 0px 1em; margin-left: 0px; }
+blockquote p { color: rgb(171, 178, 191); }
+hr { display: block; text-align: left; margin: 1em 0px; border: none; height: 2px; background-color: rgb(76, 85, 98); }
+table { padding: 0px; margin: 1rem 0.5rem; border-collapse: collapse; }
+table tr { border-top: 1px solid rgb(76, 85, 98); background-color: rgb(49, 55, 64); margin: 0px; padding: 0px; }
+table tr:hover { background-color: rgb(59, 66, 76); }
+table tr th { font-weight: bold; border: 1px solid rgb(76, 85, 98); margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(76, 85, 98); margin: 0px; padding: 6px 13px; }
+table tr th :first-child, table tr td :first-child { margin-top: 0px; }
+table tr th :last-child, table tr td :last-child { margin-bottom: 0px; }
+div.vx-mermaid-graph { margin: 16px 0px; overflow-y: hidden; background: rgb(176, 190, 197); color: rgb(108, 108, 108); }
+div.vx-flowchartjs-graph { padding: 0px 5px; margin: 16px 0px; width: fit-content; overflow: hidden; background: rgb(176, 190, 197); color: rgb(108, 108, 108); }
+div.vx-wavedrom-graph { padding: 0px 5px; margin: 16px 0px; width: fit-content; overflow: hidden; background: rgb(176, 190, 197); color: rgb(108, 108, 108); }
+div.vx-plantuml-graph { padding: 5px 5px 0px; margin: 16px 0px; width: fit-content; overflow: hidden; background: rgb(176, 190, 197); color: rgb(108, 108, 108); }
+::selection { background-color: rgb(12, 123, 255); color: rgb(227, 229, 233); }
+::-webkit-scrollbar { background-color: rgb(42, 47, 54); width: 14px; height: 14px; border: none; }
+::-webkit-scrollbar-corner { background-color: rgb(42, 47, 54); }
+::-webkit-scrollbar-button { height: 14px; width: 14px; background-color: rgb(42, 47, 54); }
+::-webkit-scrollbar-button:hover { background-color: rgb(83, 93, 108); }
+::-webkit-scrollbar-button:active { background-color: rgb(49, 55, 64); }
+::-webkit-scrollbar-track { background-color: rgb(42, 47, 54); }
+::-webkit-scrollbar-thumb { border: none; background-color: rgb(59, 66, 76); }
+::-webkit-scrollbar-thumb:hover { background-color: rgb(83, 93, 108); }
+::-webkit-scrollbar-thumb:active { background-color: rgb(76, 85, 98); }
+::-webkit-scrollbar-button:horizontal:increment { background-image: url('data:image/svg+xml;utf8,<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g>    <g transform="rotate(-90 256.00000000000006,256) " id="svg_1">   <polygon fill="%239EA5B4" id="svg_2" points="128,192 256,320 384,192  "/>  </g> </g></svg>'); background-repeat: no-repeat; background-size: contain; }
+::-webkit-scrollbar-button:horizontal:decrement { background-image: url('data:image/svg+xml;utf8,<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g>    <g transform="rotate(90 255.99999999999997,256.00000000000006) " id="svg_1">   <polygon points="128,192 256,320 384,192  " id="svg_2" fill="%239EA5B4"/>  </g> </g></svg>'); background-repeat: no-repeat; background-size: contain; }
+::-webkit-scrollbar-button:vertical:increment { background-image: url('data:image/svg+xml;utf8,<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g>    <g transform="null" id="svg_1">   <polygon points="128,192 256,320 384,192  " id="svg_2" fill="%239EA5B4"/>  </g> </g></svg>'); background-repeat: no-repeat; background-size: contain; }
+::-webkit-scrollbar-button:vertical:decrement { background-image: url('data:image/svg+xml;utf8,<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> <g>    <g transform="rotate(180 255.99999999999997,256) " id="svg_1">   <polygon points="128,192 256,320 384,192  " id="svg_2" fill="%239EA5B4"/>  </g> </g></svg>'); background-repeat: no-repeat; background-size: contain; }
+#vx-content span.vx-search-match { color: rgb(34, 34, 34); background-color: rgb(77, 182, 172); }
+#vx-content span.vx-current-search-match { color: rgb(34, 34, 34); background-color: rgb(102, 187, 106); }
+code[class*="language-"], pre[class*="language-"] { color: rgb(204, 204, 204); background: none; font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; font-size: 1em; text-align: left; white-space: pre; word-spacing: normal; word-break: normal; overflow-wrap: normal; line-height: 1.5; tab-size: 4; hyphens: none; }
+pre[class*="language-"] { padding: 1em; margin: 0.5em 0px; overflow: auto; }
+:not(pre) > code[class*="language-"], pre[class*="language-"] { background: rgb(45, 50, 59); }
+:not(pre) > code[class*="language-"] { padding: 0.1em; border-radius: 0.3em; white-space: normal; }
+.token.comment, .token.block-comment, .token.prolog, .token.doctype, .token.cdata { color: rgb(153, 153, 153); }
+.token.punctuation { color: rgb(204, 204, 204); }
+.token.tag, .token.attr-name, .token.namespace, .token.deleted { color: rgb(226, 119, 122); }
+.token.function-name { color: rgb(97, 150, 204); }
+.token.boolean, .token.number, .token.function { color: rgb(240, 141, 73); }
+.token.property, .token.class-name, .token.constant, .token.symbol { color: rgb(248, 197, 85); }
+.token.selector, .token.important, .token.atrule, .token.keyword, .token.builtin { color: rgb(204, 153, 205); }
+.token.string, .token.char, .token.attr-value, .token.regex, .token.variable { color: rgb(126, 198, 153); }
+.token.operator, .token.entity, .token.url { color: rgb(103, 205, 204); }
+.token.important, .token.bold { font-weight: bold; }
+.token.italic { font-style: italic; }
+.token.entity { cursor: help; }
+.token.inserted { color: green; }
+pre[class*="language-"].line-numbers { position: relative; padding-left: 3.8em; counter-reset: linenumber 0; }
+pre[class*="language-"].line-numbers > code { position: relative; white-space: inherit; }
+.line-numbers .line-numbers-rows { position: absolute; pointer-events: none; top: 0px; font-size: 100%; left: -3.8em; width: 3em; letter-spacing: -1px; border-right: 1px solid rgb(153, 153, 153); user-select: none; }
+.line-numbers-rows > span { display: block; counter-increment: linenumber 1; }
+.line-numbers-rows > span::before { content: counter(linenumber); color: rgb(153, 153, 153); display: block; padding-right: 0.8em; text-align: right; }
+div.code-toolbar { position: relative; }
+div.code-toolbar > .toolbar { position: absolute; top: 0.3em; right: 0.2em; transition: opacity 0.3s ease-in-out 0s; opacity: 0; }
+div.code-toolbar:hover > .toolbar { opacity: 1; }
+div.code-toolbar:focus-within > .toolbar { opacity: 1; }
+div.code-toolbar > .toolbar .toolbar-item { display: inline-block; }
+div.code-toolbar > .toolbar a { cursor: pointer; }
+div.code-toolbar > .toolbar button { background: none; border: 0px; color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; font-family: inherit; line-height: normal; overflow: visible; padding: 0px; user-select: none; }
+div.code-toolbar > .toolbar a, div.code-toolbar > .toolbar button, div.code-toolbar > .toolbar span { color: rgb(187, 187, 187); font-size: 0.8em; padding: 0px 0.5em; background: rgba(224, 224, 224, 0.2); box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 0px 0px; border-radius: 0.5em; }
+div.code-toolbar > .toolbar a:hover, div.code-toolbar > .toolbar a:focus, div.code-toolbar > .toolbar button:hover, div.code-toolbar > .toolbar button:focus, div.code-toolbar > .toolbar span:hover, div.code-toolbar > .toolbar span:focus { color: inherit; text-decoration: none; }
+.vx-image-view-image { transition: all 0.3s ease 0s; }
+.vx-modal-box { display: none; position: fixed; z-index: 1000; padding-top: 50px; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden; background-color: rgba(51, 56, 66, 0.85); }
+.vx-modal-content { margin: auto; display: block; width: auto; height: auto; cursor: move; }
+.vx-modal-content { animation-name: zoom; animation-duration: 0.6s; }
+@-webkit-keyframes zoom { 
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+@keyframes zoom { 
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+span.vx-modal-close { position: absolute; z-index: 1000; top: 15px; right: 35px; color: rgb(171, 178, 191); font-size: 40px; font-weight: bold; transition: all 0.3s ease 0s; }
+span.vx-modal-close:hover, span.vx-modal-close:focus { color: rgb(215, 218, 224); text-decoration: none; cursor: pointer; }
+ul.contains-task-list { list-style-type: none; }
+.vx-alert { position: relative; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem; }
+.alert-primary { color: rgb(0, 64, 133); background-color: rgb(204, 229, 255); border-color: rgb(184, 218, 255); }
+.alert-secondary { color: rgb(56, 61, 65); background-color: rgb(226, 227, 229); border-color: rgb(214, 216, 219); }
+.alert-success { color: rgb(21, 87, 36); background-color: rgb(212, 237, 218); border-color: rgb(195, 230, 203); }
+.alert-info { color: rgb(12, 84, 96); background-color: rgb(209, 236, 241); border-color: rgb(190, 229, 235); }
+.alert-warning { color: rgb(133, 100, 4); background-color: rgb(255, 243, 205); border-color: rgb(255, 238, 186); }
+.alert-danger { color: rgb(114, 28, 36); background-color: rgb(248, 215, 218); border-color: rgb(245, 198, 203); }
+.alert-light { color: rgb(129, 129, 130); background-color: rgb(254, 254, 254); border-color: rgb(253, 253, 254); }
+.alert-dark { color: rgb(27, 30, 33); background-color: rgb(214, 216, 217); border-color: rgb(198, 200, 202); }
+
+    </style>
+
+    <script type="text/javascript">
+        var vxOutlineToc = [];
+
+var setVisible = function(node, visible) {
+    var cl = 'hide-none';
+    if (visible) {
+        node.classList.remove(cl);
+    } else {
+        node.classList.add(cl);
+    }
+};
+
+var isVisible = function(node) {
+    var cl = 'hide-none';
+    return !node.classList.contains(cl);
+};
+
+var setPostContentExpanded = function(node, expanded) {
+    var cl = 'col-expand';
+    if (expanded) {
+        node.classList.add(cl);
+    } else {
+        node.classList.remove(cl);
+    }
+};
+
+var setOutlinePanelVisible = function(visible) {
+    var outlinePanel = document.getElementById('outline-panel');
+    var postContent = document.getElementById('post-content');
+
+    setVisible(outlinePanel, visible);
+    setPostContentExpanded(postContent, !visible);
+};
+
+var isOutlinePanelVisible = function() {
+    var outlinePanel = document.getElementById('outline-panel');
+    return isVisible(outlinePanel);
+};
+
+window.addEventListener('load', function() {
+    var outlinePanel = document.getElementById('outline-panel');
+    outlinePanel.style.display = 'initial';
+
+    var floatingContainer = document.getElementById('container-floating');
+    floatingContainer.style.display = 'initial';
+
+    var outlineContent = document.getElementById('outline-content');
+    var postContent = document.getElementById('post-content');
+
+    // Escape @text to Html.
+    var escapeHtml = function(text) {
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
+
+    // Fetch the outline.
+    var headers = postContent.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    vxOutlineToc = [];
+    for (var i = 0; i < headers.length; ++i) {
+        var header = headers[i];
+
+        vxOutlineToc.push({
+            level: parseInt(header.tagName.substr(1)),
+            anchor: header.id,
+            title: escapeHtml(header.textContent)
+        });
+    }
+
+    if (vxOutlineToc.length == 0) {
+        setOutlinePanelVisible(false);
+        setVisible(floatingContainer, false);
+        return;
+    }
+
+    var baseLevel = baseLevelOfToc(vxOutlineToc);
+    var tocTree = tocToTree(toPerfectToc(vxOutlineToc, baseLevel), baseLevel);
+
+    outlineContent.innerHTML = tocTree;
+    setOutlinePanelVisible(true);
+    setVisible(floatingContainer, true);
+});
+
+// Return the topest level of @vxOutlineToc, starting from 1.
+var baseLevelOfToc = function(p_toc) {
+    var level = -1;
+    for (i in p_toc) {
+        if (level == -1) {
+            level = p_toc[i].level;
+        } else if (level > p_toc[i].level) {
+            level = p_toc[i].level;
+        }
+    }
+
+    if (level == -1) {
+        level = 1;
+    }
+
+    return level;
+};
+
+// Handle wrong title levels, such as '#' followed by '###'
+var toPerfectToc = function(p_toc, p_baseLevel) {
+    var i;
+    var curLevel = p_baseLevel - 1;
+    var perfToc = [];
+    for (i in p_toc) {
+        var item = p_toc[i];
+
+        // Insert empty header.
+        while (item.level > curLevel + 1) {
+            curLevel += 1;
+            var tmp = { level: curLevel,
+                        anchor: '',
+                        title: '[EMPTY]'
+                      };
+            perfToc.push(tmp);
+        }
+
+        perfToc.push(item);
+        curLevel = item.level;
+    }
+
+    return perfToc;
+};
+
+var itemToHtml = function(item) {
+    return '<a href="#' + item.anchor + '" title="' + item.title + '" data="' + item.anchor + '">' + item.title + '</a>';
+};
+
+// Turn a perfect toc to a tree using <ul>
+var tocToTree = function(p_toc, p_baseLevel) {
+    var i;
+    var front = '<li>';
+    var ending = ['</li>'];
+    var curLevel = p_baseLevel;
+    for (i in p_toc) {
+        var item = p_toc[i];
+        if (item.level == curLevel) {
+            front += '</li>';
+            front += '<li>';
+            front += itemToHtml(item);
+        } else if (item.level > curLevel) {
+            // assert(item.level - curLevel == 1)
+            front += '<ul>';
+            ending.push('</ul>');
+            front += '<li>';
+            front += itemToHtml(item);
+            ending.push('</li>');
+            curLevel = item.level;
+        } else {
+            while (item.level < curLevel) {
+                var ele = ending.pop();
+                front += ele;
+                if (ele == '</ul>') {
+                    curLevel--;
+                }
+            }
+            front += '</li>';
+            front += '<li>';
+            front += itemToHtml(item);
+        }
+    }
+    while (ending.length > 0) {
+        front += ending.pop();
+    }
+    front = front.replace("<li></li>", "");
+    front = '<ul>' + front + '</ul>';
+    return front;
+};
+
+var toggleMore = function() {
+    if (vxOutlineToc.length == 0) {
+        return;
+    }
+
+    var p = document.getElementById('floating-more');
+    if (isOutlinePanelVisible()) {
+        p.textContent = '<';
+        setOutlinePanelVisible(false);
+    } else {
+        p.textContent = '>';
+        setOutlinePanelVisible(true);
+    }
+};
+
+window.addEventListener('scroll', function() {
+    if (vxOutlineToc.length == 0 || !isOutlinePanelVisible()) {
+        return;
+    }
+
+    var postContent = document.getElementById('post-content');
+    var scrollTop = document.documentElement.scrollTop
+                    || document.body.scrollTop
+                    || window.pageYOffset;
+    var eles = postContent.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+    if (eles.length == 0) {
+        return;
+    }
+
+    var idx = -1;
+    var biaScrollTop = scrollTop + 50;
+    for (var i = 0; i < eles.length; ++i) {
+        if (biaScrollTop >= eles[i].offsetTop) {
+            idx = i;
+        } else {
+            break;
+        }
+    }
+
+    var header = '';
+    if (idx != -1) {
+        header = eles[idx].id;
+    }
+
+    highlightItemOnlyInOutline(header);
+});
+
+var highlightItemOnlyInOutline = function(id) {
+    var cl = 'outline-bold';
+    var outlineContent = document.getElementById('outline-content');
+    var eles = outlineContent.querySelectorAll("a");
+    var target = null;
+    for (var i = 0; i < eles.length; ++i) {
+        var ele = eles[i];
+        if (ele.getAttribute('data') == id) {
+            target = ele;
+            ele.classList.add(cl);
+        } else {
+            ele.classList.remove(cl);
+        }
+    }
+
+    // TODO: scroll target into view within the outline panel scroll area.
+};
+
+    </script>
+
+    <!-- VX_SCRIPTS_PLACEHOLDER -->
+
+    <!-- VX_HEAD_PLACEHOLDER -->
+</head>
+<body class="vx-transparent-background">
+    <div class="container-fluid">
+    <div class="row flex-xl-nowrap">
+        <div id="outline-panel" style="display:none;" class="d-none d-md-block d-xl-block col-md-3 col-xl-2 bd-toc">
+            <div id="outline-content" class="section-nav"></div>
+        </div>
+        <div id="post-content" class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content">
+        <div id="vx-content" class="vx-constrain-image-width line-numbers"><h1 id="05---nmap" class="source-line" data-source-line="0">05 - Nmap<a class="vx-header-anchor" href="#05---nmap" vx-data-anchor-icon="¶"></a></h1>
+<div class="code-toolbar"><pre class="language-sql line-numbers"><code class="source-line language-sql" data-source-line="2"><span class="token comment"># Nmap 7.91 scan initiated Mon Jun 21 13:07:15 2021 as: nmap -sC -sV -p- -oA nmap/jail -vvv 10.10.10.34</span>
+Nmap scan report <span class="token keyword">for</span> <span class="token number">10.10</span><span class="token number">.10</span><span class="token number">.34</span>
+Host <span class="token operator">is</span> up<span class="token punctuation">,</span> received echo<span class="token operator">-</span>reply ttl <span class="token number">63</span> <span class="token punctuation">(</span><span class="token number">0.082</span>s latency<span class="token punctuation">)</span><span class="token punctuation">.</span>
+Scanned at <span class="token number">2021</span><span class="token operator">-</span><span class="token number">06</span><span class="token operator">-</span><span class="token number">21</span> <span class="token number">13</span>:<span class="token number">07</span>:<span class="token number">15</span> BST <span class="token keyword">for</span> <span class="token number">367</span>s
+<span class="token operator">Not</span> shown: <span class="token number">65529</span> filtered ports
+Reason: <span class="token number">65346</span> <span class="token keyword">no</span><span class="token operator">-</span>responses <span class="token operator">and</span> <span class="token number">183</span> host<span class="token operator">-</span>prohibiteds
+PORT      STATE SERVICE    REASON         VERSION
+<span class="token number">22</span><span class="token operator">/</span>tcp    <span class="token keyword">open</span>  ssh        syn<span class="token operator">-</span>ack ttl <span class="token number">63</span> OpenSSH <span class="token number">6.6</span><span class="token number">.1</span> <span class="token punctuation">(</span>protocol <span class="token number">2.0</span><span class="token punctuation">)</span>
+<span class="token operator">|</span> ssh<span class="token operator">-</span>hostkey: 
+<span class="token operator">|</span>   <span class="token number">2048</span> cd:ec:<span class="token number">19</span>:<span class="token number">7</span>c:da:dc:<span class="token number">16</span>:e2:a3:<span class="token number">9</span>d:<span class="token number">42</span>:f3:<span class="token number">18</span>:<span class="token number">4</span>b:e6:<span class="token number">4</span>d <span class="token punctuation">(</span>RSA<span class="token punctuation">)</span>
+<span class="token operator">|</span> ssh<span class="token operator">-</span>rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC10JBZuYCiFDOwkbbeqZLrL1s7wXMbVZxPJOg4cW4gdpi1OvuyiWsJ09dbfCzjnUjNzA<span class="token operator">/</span>e2RU7<span class="token operator">+</span>LNygV2XlDPNCltWmuBQX1aBihxmK7iFMRjM12Yeg90h1kKlezc3WOv<span class="token operator">+</span>M1YREOIKFBW7jbUiwf4z2z<span class="token operator">+</span>tfi92d3ZN58FgAmysPaLVR<span class="token operator">/</span>Ct<span class="token operator">+</span>pd9AyiSJiLCEzVYWN78lQd09D33yl1MY9no85qaWr5lgnZ3YEd7kTtCXFjICiMgir3zCrZCRHHobsMH<span class="token operator">+</span>FO3RqbOv9AHfe51rtid9UXRojgSMuzfDV19x<span class="token operator">/</span>PwYNFMuuAhnJVFRCxXClawpILp2YuBTFJsu1juXDcqfJD<span class="token operator">/</span>
+<span class="token operator">|</span>   <span class="token number">256</span> af:<span class="token number">94</span>:<span class="token number">9</span>f:<span class="token number">2</span>f:<span class="token number">21</span>:d0:e0:<span class="token number">1</span>d:ae:<span class="token number">8</span>e:<span class="token number">7</span>f:<span class="token number">1</span>d:<span class="token number">7</span>b:d7:<span class="token number">42</span>:ef <span class="token punctuation">(</span>ECDSA<span class="token punctuation">)</span>
+<span class="token operator">|</span> ecdsa<span class="token operator">-</span>sha2<span class="token operator">-</span>nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDm08eT3joqYGfJK9t2<span class="token operator">+</span>Bn5vXB5FHMnM7DIFVhXG3Up5XYwgxOnywl8gBGtcWtXqXNUkyqP8dApTHh9wljFH5A0<span class="token operator">=</span>
+<span class="token operator">|</span>   <span class="token number">256</span> <span class="token number">6</span>b:f8:dc:<span class="token number">27</span>:<span class="token number">4</span>f:<span class="token number">1</span>c:<span class="token number">89</span>:<span class="token number">67</span>:a4:<span class="token number">67</span>:c5:ed:<span class="token number">07</span>:<span class="token number">53</span>:af:<span class="token number">97</span> <span class="token punctuation">(</span>ED25519<span class="token punctuation">)</span>
+<span class="token operator">|</span>_ssh<span class="token operator">-</span>ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJLJbZLS01Zdaxy<span class="token operator">/</span>HoDmoUF7fBBi3BhS<span class="token operator">/</span>NW9NShcGaOs
+<span class="token number">80</span><span class="token operator">/</span>tcp    <span class="token keyword">open</span>  http       syn<span class="token operator">-</span>ack ttl <span class="token number">63</span> Apache httpd <span class="token number">2.4</span><span class="token number">.6</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>CentOS<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token operator">|</span> http<span class="token operator">-</span>methods: 
+<span class="token operator">|</span>   Supported Methods: POST OPTIONS GET HEAD TRACE
+<span class="token operator">|</span>_  Potentially risky methods: TRACE
+<span class="token operator">|</span>_http<span class="token operator">-</span>server<span class="token operator">-</span>header: Apache<span class="token operator">/</span><span class="token number">2.4</span><span class="token number">.6</span> <span class="token punctuation">(</span>CentOS<span class="token punctuation">)</span>
+<span class="token operator">|</span>_http<span class="token operator">-</span>title: Site doesn't have a title <span class="token punctuation">(</span><span class="token keyword">text</span><span class="token operator">/</span>html<span class="token punctuation">;</span> <span class="token keyword">charset</span><span class="token operator">=</span>UTF<span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+<span class="token number">111</span><span class="token operator">/</span>tcp   <span class="token keyword">open</span>  rpcbind    syn<span class="token operator">-</span>ack ttl <span class="token number">63</span> <span class="token number">2</span><span class="token operator">-</span><span class="token number">4</span> <span class="token punctuation">(</span>RPC <span class="token comment">#100000)</span>
+<span class="token operator">|</span> rpcinfo: 
+<span class="token operator">|</span>   program version    port<span class="token operator">/</span>proto  service
+<span class="token operator">|</span>   <span class="token number">100000</span>  <span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>        <span class="token number">111</span><span class="token operator">/</span>tcp   rpcbind
+<span class="token operator">|</span>   <span class="token number">100000</span>  <span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>        <span class="token number">111</span><span class="token operator">/</span>udp   rpcbind
+<span class="token operator">|</span>   <span class="token number">100000</span>  <span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>          <span class="token number">111</span><span class="token operator">/</span>tcp6  rpcbind
+<span class="token operator">|</span>   <span class="token number">100000</span>  <span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>          <span class="token number">111</span><span class="token operator">/</span>udp6  rpcbind
+<span class="token operator">|</span>   <span class="token number">100003</span>  <span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>         <span class="token number">2049</span><span class="token operator">/</span>tcp   nfs
+<span class="token operator">|</span>   <span class="token number">100003</span>  <span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>         <span class="token number">2049</span><span class="token operator">/</span>tcp6  nfs
+<span class="token operator">|</span>   <span class="token number">100003</span>  <span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>         <span class="token number">2049</span><span class="token operator">/</span>udp   nfs
+<span class="token operator">|</span>   <span class="token number">100003</span>  <span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>         <span class="token number">2049</span><span class="token operator">/</span>udp6  nfs
+<span class="token operator">|</span>   <span class="token number">100005</span>  <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span>      <span class="token number">20048</span><span class="token operator">/</span>tcp   mountd
+<span class="token operator">|</span>   <span class="token number">100005</span>  <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span>      <span class="token number">20048</span><span class="token operator">/</span>tcp6  mountd
+<span class="token operator">|</span>   <span class="token number">100005</span>  <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span>      <span class="token number">20048</span><span class="token operator">/</span>udp   mountd
+<span class="token operator">|</span>   <span class="token number">100005</span>  <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span>      <span class="token number">20048</span><span class="token operator">/</span>udp6  mountd
+<span class="token operator">|</span>   <span class="token number">100021</span>  <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>      <span class="token number">33047</span><span class="token operator">/</span>udp6  nlockmgr
+<span class="token operator">|</span>   <span class="token number">100021</span>  <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>      <span class="token number">42119</span><span class="token operator">/</span>tcp6  nlockmgr
+<span class="token operator">|</span>   <span class="token number">100021</span>  <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>      <span class="token number">44809</span><span class="token operator">/</span>tcp   nlockmgr
+<span class="token operator">|</span>   <span class="token number">100021</span>  <span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span>      <span class="token number">46337</span><span class="token operator">/</span>udp   nlockmgr
+<span class="token operator">|</span>   <span class="token number">100024</span>  <span class="token number">1</span>          <span class="token number">44857</span><span class="token operator">/</span>tcp6  <span class="token keyword">status</span>
+<span class="token operator">|</span>   <span class="token number">100024</span>  <span class="token number">1</span>          <span class="token number">49710</span><span class="token operator">/</span>udp6  <span class="token keyword">status</span>
+<span class="token operator">|</span>   <span class="token number">100024</span>  <span class="token number">1</span>          <span class="token number">53892</span><span class="token operator">/</span>udp   <span class="token keyword">status</span>
+<span class="token operator">|</span>   <span class="token number">100024</span>  <span class="token number">1</span>          <span class="token number">57881</span><span class="token operator">/</span>tcp   <span class="token keyword">status</span>
+<span class="token operator">|</span>   <span class="token number">100227</span>  <span class="token number">3</span>           <span class="token number">2049</span><span class="token operator">/</span>tcp   nfs_acl
+<span class="token operator">|</span>   <span class="token number">100227</span>  <span class="token number">3</span>           <span class="token number">2049</span><span class="token operator">/</span>tcp6  nfs_acl
+<span class="token operator">|</span>   <span class="token number">100227</span>  <span class="token number">3</span>           <span class="token number">2049</span><span class="token operator">/</span>udp   nfs_acl
+<span class="token operator">|</span>_  <span class="token number">100227</span>  <span class="token number">3</span>           <span class="token number">2049</span><span class="token operator">/</span>udp6  nfs_acl
+<span class="token number">2049</span><span class="token operator">/</span>tcp  <span class="token keyword">open</span>  nfs_acl    syn<span class="token operator">-</span>ack ttl <span class="token number">63</span> <span class="token number">3</span> <span class="token punctuation">(</span>RPC <span class="token comment">#100227)</span>
+<span class="token number">7411</span><span class="token operator">/</span>tcp  <span class="token keyword">open</span>  daqstream? syn<span class="token operator">-</span>ack ttl <span class="token number">63</span>
+<span class="token operator">|</span> fingerprint<span class="token operator">-</span>strings: 
+<span class="token operator">|</span>   DNSStatusRequestTCP<span class="token punctuation">,</span> DNSVersionBindReqTCP<span class="token punctuation">,</span> FourOhFourRequest<span class="token punctuation">,</span> GenericLines<span class="token punctuation">,</span> GetRequest<span class="token punctuation">,</span> HTTPOptions<span class="token punctuation">,</span> Help<span class="token punctuation">,</span> JavaRMI<span class="token punctuation">,</span> Kerberos<span class="token punctuation">,</span> LANDesk<span class="token operator">-</span>RC<span class="token punctuation">,</span> LDAPBindReq<span class="token punctuation">,</span> LDAPSearchReq<span class="token punctuation">,</span> LPDString<span class="token punctuation">,</span> NCP<span class="token punctuation">,</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span> NotesRPC<span class="token punctuation">,</span> RPCCheck<span class="token punctuation">,</span> RTSPRequest<span class="token punctuation">,</span> SIPOptions<span class="token punctuation">,</span> SMBProgNeg<span class="token punctuation">,</span> SSLSessionReq<span class="token punctuation">,</span> TLSSessionReq<span class="token punctuation">,</span> TerminalServer<span class="token punctuation">,</span> TerminalServerCookie<span class="token punctuation">,</span> WMSRequest<span class="token punctuation">,</span> X11Probe<span class="token punctuation">,</span> afp<span class="token punctuation">,</span> giop<span class="token punctuation">,</span> ms<span class="token operator">-</span><span class="token keyword">sql</span><span class="token operator">-</span>s<span class="token punctuation">,</span> oracle<span class="token operator">-</span>tns: 
+<span class="token operator">|</span>_    OK Ready<span class="token punctuation">.</span> Send <span class="token keyword">USER</span> command<span class="token punctuation">.</span>
+<span class="token number">20048</span><span class="token operator">/</span>tcp <span class="token keyword">open</span>  mountd     syn<span class="token operator">-</span>ack ttl <span class="token number">63</span> <span class="token number">1</span><span class="token operator">-</span><span class="token number">3</span> <span class="token punctuation">(</span>RPC <span class="token comment">#100005)</span>
+<span class="token number">1</span> service unrecognized despite <span class="token keyword">returning</span> <span class="token keyword">data</span><span class="token punctuation">.</span> <span class="token keyword">If</span> you know the service<span class="token operator">/</span>version<span class="token punctuation">,</span> please submit the <span class="token keyword">following</span> fingerprint at https:<span class="token comment">//nmap.org/cgi-bin/submit.cgi?new-service :</span>
+SF<span class="token operator">-</span>Port7411<span class="token operator">-</span>TCP:V<span class="token operator">=</span><span class="token number">7.91</span><span class="token operator">%</span>I<span class="token operator">=</span><span class="token number">7</span><span class="token operator">%</span>D<span class="token operator">=</span><span class="token number">6</span><span class="token operator">/</span><span class="token number">21</span><span class="token operator">%</span><span class="token keyword">Time</span><span class="token operator">=</span><span class="token number">60</span>D081AC<span class="token operator">%</span>P<span class="token operator">=</span>x86_64<span class="token operator">-</span>pc<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">%</span>r<span class="token punctuation">(</span>NU
+SF:LL<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>GenericLines<span class="token punctuation">,</span><span class="token number">1</span>D
+SF:<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>GetRequest<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x2
+SF:0Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>HTTPOptions<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready
+SF:\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>RTSPRequest<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20
+SF:Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>RPCCheck<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20U
+SF:SER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>DNSVersionBindReqTCP<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x
+SF:20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>DNSStatusRequestTCP<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send
+SF:\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>Help<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20c
+SF:ommand\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>SSLSessionReq<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20comma
+SF:nd\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>TerminalServerCookie<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20co
+SF:mmand\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>TLSSessionReq<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20comman
+SF:d\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>Kerberos<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r
+SF:<span class="token punctuation">(</span>SMBProgNeg<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>X11Pro
+SF:be<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>FourOhFourReque
+SF:st<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>LPDString<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"O
+SF:K\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>LDAPSearchReq<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x2
+SF:0Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>LDAPBindReq<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready
+SF:\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>SIPOptions<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20S
+SF:end\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>LANDesk<span class="token operator">-</span>RC<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20
+SF:USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>TerminalServer<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USE
+SF:R\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>NCP<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.
+SF:\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>NotesRPC<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>Ja
+SF:vaRMI<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>WMSRequest<span class="token punctuation">,</span><span class="token number">1</span>
+SF:D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>oracle<span class="token operator">-</span>tns<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x
+SF:20Ready\.\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>ms<span class="token operator">-</span><span class="token keyword">sql</span><span class="token operator">-</span>s<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.
+SF:\x20Send\x20USER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>afp<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20US
+SF:ER\x20command\.\n"</span><span class="token punctuation">)</span><span class="token operator">%</span>r<span class="token punctuation">(</span>giop<span class="token punctuation">,</span><span class="token number">1</span>D<span class="token punctuation">,</span><span class="token string">"OK\x20Ready\.\x20Send\x20USER\x20command
+SF:\.\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">Read</span> <span class="token keyword">data</span> files <span class="token keyword">from</span>: <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span><span class="token keyword">share</span><span class="token operator">/</span>nmap
+Service detection performed<span class="token punctuation">.</span> Please report <span class="token keyword">any</span> incorrect results at https:<span class="token comment">//nmap.org/submit/ .</span>
+<span class="token comment"># Nmap done at Mon Jun 21 13:13:22 2021 -- 1 IP address (1 host up) scanned in 367.18 seconds</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button>Copy</button></div></div></div>
+</div>
+        </div>
+    </div>
+    </div>
+
+    <div id="container-floating" style="display:none;" class="d-none d-md-block d-xl-block">
+        <div id="floating-button" onclick="toggleMore()">
+            <p id="floating-more" class="more">&gt;</p>
+        </div>
+    </div>
+</body>
+</html>
