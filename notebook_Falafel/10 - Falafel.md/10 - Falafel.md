@@ -35,7 +35,7 @@
 
 * User **chris**
 * Admin access without password
-* Code execution in image upload
+* Code execution on image upload
 
 
 # Wrong identification
@@ -79,7 +79,7 @@ in php
 
 Php will extract the number from the string and do the comparison after that
 
-If the number starts 0e this will be parsed as 0. It is mentioned in [#Type juggling in php](file:///home/user/htb/falafel/notes/10%20-%20Falafel.md#type-juggling-in-php)
+If the number starts with 0e this will be parsed as 0. It is mentioned in [#Type juggling in php](file:///home/user/htb/falafel/notes/10%20-%20Falafel.md#type-juggling-in-php)
 
 
 
