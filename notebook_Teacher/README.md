@@ -1,0 +1,3 @@
+# Summary
+
+Teacher is another easy linux box. It is hosting Moodle which is a learning management system. The server is running an outdated version of Moodle and it is vulnerable to RCE. We use a public exploit to get in the box. Once in the box, we obtain the credentials to mysql database, which gives us Giovanni's password. Logging in as Giovanni surprises us with some root-owned files in the user's home directory. After going through the process monitoring phase we see a crontab executing GNU tar in the user's home directory. We root the box by putting a symbolic link to /etc/shadow in one of the root-owned directories.
