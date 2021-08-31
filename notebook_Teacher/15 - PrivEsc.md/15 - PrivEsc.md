@@ -104,7 +104,7 @@ Once logged in, we notice files that belong to root.
 
 
 
-# Root is extracting tarball every minutes
+# Root is extracting tarball every minute
 ```bash
 giovanni@teacher:~/work/tmp$ date
 Sat Aug 28 18:50:11 CEST 2021
@@ -116,7 +116,7 @@ drwxr-xr-x 4 giovanni giovanni 4096 Jun 27  2018 ..
 drwxrwxrwx 3 root     root     4096 Aug 28 18:50 courses
 ```
 
-Today's date and time matches the file modification time. This means a process running as root is doing something in our home directory every minutes. Of course we should take into account that the archive and courses are read/write open to everybody.
+Today's date and time matches the file modification time. This means a process running as root is doing something in our home directory every minute. Of course we should take into account that the archive and courses are read/write open to everybody.
 
 We need to know what exactly is happening in giovanni's home. To do that we have to monitor all the processes. PsPy is a great tool for monitoring processes without root permissions.
 
