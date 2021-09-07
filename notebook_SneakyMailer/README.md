@@ -1,0 +1,3 @@
+# Quick Summary
+
+SneakyMailer is a very fun medium difficulty box. There is so much to learn from this box. It teaches you about python packages and phishing attacks. We start off by sending phishing emails to the employees. A user responds to our email with credentials to their email account. Afterwards, we obtain credentials to ftp. With file upload exploit via ftp we finally get code execution in the box. While in the box we notice another virtual host routing, pypi. Through pypi package upload we manage to receive another reverse shell but a privileged one. From **low** to **root** is very easy considering it is in medium difficulty box.
